@@ -1,0 +1,8 @@
+/tmp
+/node_modules
+
+/hybrid/plugins
+/hybrid/platforms
+/hybrid/www
+
+/app/templates/minified
