@@ -50,7 +50,9 @@ gulp.task('build.appjs', function() {
    debug: true,
    paths: ['node_modules',
      'app/scripts',
-     'app/scripts/components']
+     'app/scripts/components',
+     'app/scripts/components/common',
+     'app/scripts/components/todoList']
  })
    .transform(babelify, {presets: 'react'})
    .bundle()

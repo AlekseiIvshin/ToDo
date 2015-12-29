@@ -6,8 +6,10 @@ var Link = require('react-router').Link;
 
 var App = require('AppRoot.jsx');
 
+var TodoList = require('TodoList.jsx');
+
 ReactDOM.render((
   <Router>
-    <Route path="/" component={App} />
+    <Route path="/" component={TodoList} />
   </Router>
-), document.querySelector('#content'));
+), document.querySelector('#mount-point'));
