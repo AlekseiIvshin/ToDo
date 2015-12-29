@@ -1,0 +1,22 @@
+@import 'dimens';
+
+@font-face {
+    font-family: defaultFont;
+    src: url("../fonts/Roboto-Medium.ttf");
+}
+
+@font-face {
+  font-family: Ionicons;
+  src: url("../fonts/ionicons.woff");
+}
+
+html {
+  height: 100%;
+}
+
+body {
+  font-family: defaultFont;
+  margin: 0;
+  height: 100%;
+  font-size: $medium-text-size;
+}
