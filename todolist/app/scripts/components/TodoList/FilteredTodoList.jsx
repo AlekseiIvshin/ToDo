@@ -3,31 +3,55 @@ var List = require('List.jsx');
 var TodoItem = require('TodoItem.jsx');
 var _ = require('lodash');
 
+var TodoStore = require('stores/TodoStore.js');
+
+function getAppState() {
+  return {
+    todoList: TodoStore.getTodoList()
+  }
+}
+
 var FilteredTodoList = React.createClass({
 
-  filterList: function(event) {
-    var filterValue = event.target.value.toLowerCase();
-    var filteredList = this.state.items.filter(function (item) {
-      return item.toLowerCase().search(filterValue) != -1;
-    });
-    this.setState({
-      items: filteredList
-    })
+  getInitialState: function() {
+    return getAppState();
   },
 
-  getInitialState: function() {
-    return {
-      items: []
-    };
+  componentDidMount: function() {
+    TodoStore.addChangeListListener(this._onChangeList);
+  },
+
+  componentWillUnmount: function() {
+    TodoStore.removeChangeListListener(this._onChangeList);
   },
 
   render: function() {
+    var allTodos = this.state.todoList;
+    var todos = [];
+    for (var key in allTodos) {
+      todos.push(<TodoItem key={key} name={allTodos[key].name} todoId={allTodos[key].id}/>);
+    }
+
     return (
-      <div className="e-filter-list">
-        <input type="search" placeholder="Search" onChange={_.debounce(this.filterList, 1000)} />
-        <List items={this.state.items} />
+      <div>
+        <input type="search" placeholder="Search" onChange={_.debounce(this._filterList, 1000)} className="e-filter" />
+        <List items={todos} />
       </div>
     )
+  },
+
+  _onChangeList: function() {
+    this.setState(getAppState());
+  },
+
+  _filterList: function(event) {
+    var filterValue = event.target.value.toLowerCase();
+    var filteredList = this.getInitialState().todoList.filter(function (item) {
+      return item.name.toLowerCase().search(filterValue) != -1;
+    });
+    this.setState({
+      todoList: filteredList
+    })
   }
 });
 

@@ -15,8 +15,10 @@ var TodoItem = React.createClass({
 
   render: function() {
     return (
-      <div className='e-list_item' onClick={this.changeCheck}>
-        <input type='checkbox'>{this.props.name}</input>
+      <div className='e-list__item'>
+        <input className='e-list__item-selector' type='checkbox' id={this.props.todoId} onClick={this.changeCheck}/>
+        <span className='e-list__item-name'>{this.props.name}</span>
+        <span className='e-list__item-edit' onClick={this.editTodo}>Edit</span>
       </div>
     )
   }
