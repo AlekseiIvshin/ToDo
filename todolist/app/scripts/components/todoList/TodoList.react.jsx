@@ -1,5 +1,5 @@
 var React = require('react');
-var FilteredTodoList = require('FilteredTodoList.jsx');
+var FilteredTodoList = require('FilteredTodoList.react.jsx');
 
 var TodoList = React.createClass({
   render: function() {
