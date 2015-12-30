@@ -52,7 +52,8 @@ gulp.task('build.appjs', function() {
      'app/scripts',
      'app/scripts/components',
      'app/scripts/components/common',
-     'app/scripts/components/todoList']
+     'app/scripts/components/todoList',
+     'app/scripts/components/todoForm']
  })
    .transform(babelify, {presets: 'react'})
    .bundle()

@@ -1,5 +1,6 @@
 var React = require('react');
 var TodoActions = require('actions/TodoActions.js');
+var Link = require('react-router').Link;
 
 var TodoItem = React.createClass({
   changeStatus: function(element) {
@@ -27,7 +28,7 @@ var TodoItem = React.createClass({
         <div className='e-list__item'>
           <input className='e-list__item-selector' type='checkbox' id={this.props.todo.id} onChange={this.changeStatus} />
           <span className='e-list__item-name'>{this.props.todo.name}</span>
-          <span className='e-list__item-edit' onClick={this.editTodo}>Edit</span>
+          <Link to={'/task/' + this.props.todo.id + '/edit'}>Edit</Link>
         </div>
       )
     }

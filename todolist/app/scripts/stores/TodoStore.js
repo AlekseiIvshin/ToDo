@@ -34,6 +34,12 @@ var TodoStore = merge.recursive(true, EventEmitter.prototype, {
     return _todoList;
   },
 
+  getTaskById: function(taskId) {
+    return _.find(_todoList, function(item) {
+      return item.id == taskId;
+    });
+  },
+
   emitChangeList: function() {
     this.emit('change');
   },
