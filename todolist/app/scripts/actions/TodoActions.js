@@ -10,6 +10,24 @@ var TodoActions = {
         newStatus: newStatus
       }
     })
+  },
+
+  updateTask: function(updatedTask) {
+    Dispatcher.handleAction({
+      actionType: TodoConstants.UPDATE_TASK,
+      data: {
+        updates: updatedTask
+      }
+    })
+  },
+
+  addTask: function(newTask) {
+    Dispatcher.handleAction({
+      actionType: TodoConstants.ADD_TASK,
+      data: {
+        newTask: newTask
+      }
+    })
   }
 }
 

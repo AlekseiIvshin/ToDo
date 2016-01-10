@@ -2,6 +2,7 @@ var React = require('react');
 var TodoStore = require('stores/TodoStore.js');
 var Link = require('react-router').Link;
 var Toolbar = require('Toolbar.react.jsx');
+var TodoActions = require('actions/TodoActions.js');
 
 var TodoForm = React.createClass({
 
@@ -45,16 +46,15 @@ var TodoForm = React.createClass({
 
   _onUpdateTask: function() {
     var todoNameElement = document.querySelector('#todoName');
-    var taskId = this.props.params.taskId;
-    TodoStore.updateTask({
-      id: taskId,
+    TodoActions.updateTask({
+      id: this.props.params.taskId,
       name: todoNameElement.value
     });
   },
 
   _onCreateTask: function() {
     var todoNameElement = document.querySelector('#todoName');
-    TodoStore.createTask({
+    TodoActions.addTask({
       name: todoNameElement.value
     });
   }

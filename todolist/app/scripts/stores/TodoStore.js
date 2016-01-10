@@ -33,28 +33,32 @@ function changeStatus(todoId, newStatus) {
   todoItem.status = newStatus;
 }
 
+function updateTask(taskUpdates) {
+  var task = getTaskById(taskUpdates.id);
+  task.name = taskUpdates.name;
+}
+
+function addTask(newTask) {
+  var taskId = generateId();
+  _todoList.push({
+    id: taskId,
+    name: newTask.name
+  });
+}
+
+function getTaskById(taskId) {
+  return _.find(_todoList, function(item) {
+    return item.id == taskId;
+  });
+}
+
 var TodoStore = merge.recursive(true, EventEmitter.prototype, {
   getTodoList: function() {
     return _todoList;
   },
 
   getTaskById: function(taskId) {
-    return _.find(_todoList, function(item) {
-      return item.id == taskId;
-    });
-  },
-
-  updateTask: function(taskUpdates) {
-    var task = this.getTaskById(taskUpdates.id);
-    task.name = taskUpdates.name;
-  },
-
-  createTask: function(newTask) {
-    var taskId = generateId();
-    _todoList.push({
-      id: taskId,
-      name: newTask.name
-    });
+    return getTaskById(taskId);
   },
 
   emitChangeList: function() {
@@ -77,12 +81,18 @@ Dispatcher.register(function(payload) {
   switch(action.actionType) {
     case TodoConstants.CHANGE_STATUS:
       changeStatus(action.data.todoId, action.data.newStatus);
+      TodoStore.emitChangeList();
+      break;
+    case TodoConstants.UPDATE_TASK:
+      updateTask(action.data.updates);
+      break;
+    case TodoConstants.ADD_TASK:
+      addTask(action.data.newTask);
       break;
     default:
       return true;
   }
 
-  TodoStore.emitChangeList();
   return true;
 });
 
