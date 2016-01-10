@@ -10,9 +10,9 @@ var TodoList = React.createClass({
   render: function() {
     return (
       <div>
-        <div>
-          <Link to='/task/new'>Add task</Link>
-        </div>
+        <Link to='/task/new' className='e-new-task'>
+          <span className='e-font-icon'>&#xf2c7;</span>Add task
+        </Link>
         <FilteredTodoList />
       </div>
     )

@@ -1,0 +1,23 @@
+@import 'dimens';
+
+.e-toolbar {
+
+  &__item {
+    display: inline-block;
+    box-sizing: border-box;
+    padding: $default-spacing;
+
+    &--nav {
+      width: 30%;
+    }
+    &--title {
+      width: 40%;
+      text-align: center;
+    }
+    &--action {
+      width: 30%;
+      text-align: right;
+    }
+
+  }
+}

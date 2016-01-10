@@ -28,23 +28,24 @@ var TodoForm = React.createClass({
 
   render: function() {
     var toolbarTitle;
-    var actionTitle;
     var action;
     if (this.props.route.mode === 'new') {
       toolbarTitle = 'New task';
-      actionTitle = 'Save';
       action = this._onCreateTask;
     } else {
       toolbarTitle = 'Edit task';
-      actionTitle = 'Edit';
       action = this._onUpdateTask;
     }
     return (
-      <div className='e-todo-form'>
-        <Toolbar title={toolbarTitle} navIcon='&#xf124;' navTitle='Back' actionTitle={actionTitle} onActionClick={action} />
-        <div className='e-todo-form__item e-form-item'>
-          <span className='e-form-item__label'>Name</span>
-          <input type='text' id='todoName' defaultValue={this.state.todo.name} />
+      <div>
+        <Toolbar title={toolbarTitle} navIcon='&#xf124;' navTitle='Back' actionTitle='Save' onActionClick={action} />
+        <div className='e-task-form'>
+          <div  className='e-task-form__label'>
+            <span>Name:</span>
+          </div>
+          <div  className='e-task-form__value'>
+          <input className='e-task-form__field' type='text' id='todoName' defaultValue={this.state.todo.name} />
+          </div>
         </div>
       </div>
     )

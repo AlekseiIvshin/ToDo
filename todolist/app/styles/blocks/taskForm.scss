@@ -1,0 +1,17 @@
+@import 'dimens';
+
+.e-task-form {
+  padding: $default-spacing;
+
+
+  &__label {
+    margin-bottom: $default-spacing;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  &__field {
+    width: 100%;
+    box-sizing: border-box;
+  }
+}
