@@ -22,6 +22,10 @@ var _todoList = [
   }
 ];
 
+function generateId() {
+  return _todoList.length + 1;
+}
+
 function changeStatus(todoId, newStatus) {
   var todoItem = _.find(_todoList, function(item) {
     return item.id == todoId;
@@ -37,6 +41,19 @@ var TodoStore = merge.recursive(true, EventEmitter.prototype, {
   getTaskById: function(taskId) {
     return _.find(_todoList, function(item) {
       return item.id == taskId;
+    });
+  },
+
+  updateTask: function(taskUpdates) {
+    var task = this.getTaskById(taskUpdates.id);
+    task.name = taskUpdates.name;
+  },
+
+  createTask: function(newTask) {
+    var taskId = generateId();
+    _todoList.push({
+      id: taskId,
+      name: newTask.name
     });
   },
 
