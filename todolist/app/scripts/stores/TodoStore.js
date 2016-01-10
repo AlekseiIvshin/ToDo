@@ -3,6 +3,7 @@ var EventEmitter = require('events').EventEmitter;
 var TodoConstants = require('constants/TodosConstants.js');
 var merge = require('merge');
 var _ = require('lodash');
+var TasksService = require('services/TasksService.js');
 
 var _todoList = [
   {
@@ -54,7 +55,8 @@ function getTaskById(taskId) {
 
 var TodoStore = merge.recursive(true, EventEmitter.prototype, {
   getTodoList: function() {
-    return _todoList;
+    return TasksService.getTasksList()
+      .then();
   },
 
   getTaskById: function(taskId) {
@@ -71,6 +73,18 @@ var TodoStore = merge.recursive(true, EventEmitter.prototype, {
 
   removeChangeListListener: function(callback) {
     this.removeListener('changeList', callback);
+  },
+
+  emitTaskListLoaded: function() {
+    this.emit('tasksLoaded');
+  },
+
+  addTaskListLoadedListener: function(callback) {
+    this.on('tasksLoaded', callback);
+  },
+
+  removeTaskListLoadedListener: function(callback) {
+    this.removeListener('tasksLoaded', callback);
   },
 
   emitChangeTask: function() {
