@@ -62,15 +62,27 @@ var TodoStore = merge.recursive(true, EventEmitter.prototype, {
   },
 
   emitChangeList: function() {
-    this.emit('change');
+    this.emit('changeList');
   },
 
   addChangeListListener: function(callback) {
-    this.on('change', callback);
+    this.on('changeList', callback);
   },
 
   removeChangeListListener: function(callback) {
-    this.removeListener('change', callback);
+    this.removeListener('changeList', callback);
+  },
+
+  emitChangeTask: function() {
+    this.emit('changeTask');
+  },
+
+  addChangeTaskListener: function(callback) {
+    this.on('changeTask', callback);
+  },
+
+  removeChangeTaskListener: function(callback) {
+    this.removeListener('changeTask', callback);
   }
 });
 
@@ -85,9 +97,11 @@ Dispatcher.register(function(payload) {
       break;
     case TodoConstants.UPDATE_TASK:
       updateTask(action.data.updates);
+      TodoStore.emitChangeTask();
       break;
     case TodoConstants.ADD_TASK:
       addTask(action.data.newTask);
+      TodoStore.emitChangeTask();
       break;
     default:
       return true;

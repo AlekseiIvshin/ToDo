@@ -1,11 +1,9 @@
 var React = require('react');
 var TodoStore = require('stores/TodoStore.js');
-var Link = require('react-router').Link;
 var Toolbar = require('Toolbar.react.jsx');
 var TodoActions = require('actions/TodoActions.js');
 
 var TodoForm = React.createClass({
-
   getInitialState: function() {
     if (this.props.route.mode == 'edit') {
       return {
@@ -18,6 +16,14 @@ var TodoForm = React.createClass({
         }
       }
     }
+  },
+
+  componentDidMount: function() {
+    TodoStore.addChangeTaskListener(this._onChangeTask);
+  },
+
+  componentWillUnmount: function() {
+    TodoStore.removeChangeTaskListener(this._onChangeTask);
   },
 
   render: function() {
@@ -57,6 +63,10 @@ var TodoForm = React.createClass({
     TodoActions.addTask({
       name: todoNameElement.value
     });
+  },
+
+  _onChangeTask: function() {
+    window.location.hash = '/';
   }
 });
 
