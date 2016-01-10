@@ -8,8 +8,8 @@ var Toolbar = React.createClass({
       <div className='e-toolbar'>
         <div className='e-toolbar__item'>
           <Link to={'/'}>
-            <span className="e-font-icon">&#xf124;</span>
-            <span>Back</span>
+            <span className="e-font-icon">{this.props.navIcon}</span>
+            <span>{this.props.navTitle}</span>
           </Link>
         </div>
         <div className='e-toolbar__item'><span>{this.props.title}</span></div>

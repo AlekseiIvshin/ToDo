@@ -10,6 +10,7 @@ var TodoForm = require('TodoForm.react.jsx');
 ReactDOM.render((
   <Router>
     <Route path="/" component={TodoList} />
-    <Route path="/task/:taskId/:mode" component={TodoForm} />
+    <Route path="/task/edit/:taskId" component={TodoForm} mode='edit' />
+    <Route path="/task/new" component={TodoForm}  mode='new' />
   </Router>
 ), document.querySelector('#mount-point'));

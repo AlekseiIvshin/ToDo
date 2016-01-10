@@ -6,7 +6,7 @@ var Toolbar = require('Toolbar.react.jsx');
 var TodoForm = React.createClass({
 
   getInitialState: function() {
-    if (this.props.params.mode == 'edit') {
+    if (this.props.route.mode == 'edit') {
       return {
         todo: TodoStore.getTaskById(this.props.params.taskId)
       }
@@ -23,7 +23,7 @@ var TodoForm = React.createClass({
     var toolbarTitle;
     var actionTitle;
     var action;
-    if (this.props.params.mode === 'new') {
+    if (this.props.route.mode === 'new') {
       toolbarTitle = 'New task';
       actionTitle = 'Save';
       action = this._onCreateTask;
@@ -34,7 +34,7 @@ var TodoForm = React.createClass({
     }
     return (
       <div className='e-todo-form'>
-        <Toolbar title={toolbarTitle} actionTitle={actionTitle} onActionClick={action} />
+        <Toolbar title={toolbarTitle} navIcon='&#xf124;' navTitle='Back' actionTitle={actionTitle} onActionClick={action} />
         <div className='e-todo-form__item e-form-item'>
           <span className='e-form-item__label'>Name</span>
           <input type='text' id='todoName' defaultValue={this.state.todo.name} />

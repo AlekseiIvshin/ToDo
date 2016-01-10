@@ -28,7 +28,7 @@ var TodoItem = React.createClass({
         <div className='e-list__item'>
           <input className='e-list__item-selector' type='checkbox' id={this.props.todo.id} onChange={this.changeStatus} />
           <span className='e-list__item-name'>{this.props.todo.name}</span>
-          <Link to={'/task/' + this.props.todo.id + '/edit'}>Edit</Link>
+          <Link to={'/task/edit/' + this.props.todo.id }>Edit</Link>
         </div>
       )
     }
