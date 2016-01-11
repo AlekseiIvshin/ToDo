@@ -1,6 +1,5 @@
 /tmp
 /node_modules
 
-/hybrid/plugins
 /hybrid/platforms
-/hybrid/www
+/hybrid/www/
