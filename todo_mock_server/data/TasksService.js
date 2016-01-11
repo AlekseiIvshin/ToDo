@@ -33,8 +33,23 @@ TasksService.changeStatus = function(todoId, newStatus) {
 }
 
 TasksService.updateTask = function (taskUpdates) {
-  var task = getTaskById(taskUpdates.id);
-  task.name = taskUpdates.name;
+  var task = TasksService.getTaskById(taskUpdates.id);
+  if(!task) {
+    return {
+      success: false,
+      message: 'Task was not found (id = ' + taskUpdates.id + ')'
+    }
+  }
+  if(taskUpdates.hasOwnProperty('name')) {
+    task.name = taskUpdates.name;
+  }
+  if(taskUpdates.hasOwnProperty('status')) {
+    task.status = taskUpdates.status;
+  }
+  return {
+    success: true,
+    message: 'Task updated'
+  }
 }
 
 TasksService.addTask = function (newTask) {
@@ -53,6 +68,13 @@ TasksService.getTaskById = function (taskId) {
 
 TasksService.getTasksList = function () {
   return _tasksList;
+}
+
+TasksService.getFilteredTaskList = function(filterByName) {
+  var preparedFilterName = filterByName.toLowerCase();
+  return _.filter(_tasksList, function(item) {
+    return item.name.toLowerCase().search(preparedFilterName) != -1;
+  });
 }
 
 module.exports = TasksService;
