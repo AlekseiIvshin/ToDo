@@ -18,22 +18,19 @@
     align-items: center;
   }
 
-  &__item:nth-child(even) {
-    background-color: #d3d3d3;
-  }
-
   &__item-selector {
     margin-right: $default-spacing;
     min-width: 15px;
     margin-left: 0;
   }
   &__item-name {
-
     &--done {
       text-decoration: line-through;
     }
   }
   &__item-edit {
-
+    &--unactive {
+      color: gray;
+    }
   }
 }

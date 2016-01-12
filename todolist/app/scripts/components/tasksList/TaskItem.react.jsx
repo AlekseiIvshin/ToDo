@@ -23,7 +23,7 @@ var TaskItem = React.createClass({
         <div className='e-list__item'>
           <input className='e-list__item-selector' type='checkbox' id={this.props.task.id} onChange={this.changeStatus} checked />
           <span className='e-list__item-name e-list__item-name--done'>{this.props.task.name}</span>
-          <span className='e-list__item-edit'></span>
+          <span className='e-list__item-edit e-list__item-edit--unactive'>Edit</span>
         </div>
       )
     } else {
@@ -31,7 +31,7 @@ var TaskItem = React.createClass({
         <div className='e-list__item'>
           <input className='e-list__item-selector' type='checkbox' id={this.props.task.id} onChange={this.changeStatus} />
           <span className='e-list__item-name'>{this.props.task.name}</span>
-          <Link to={'/task/edit/' + this.props.task.id }>Edit</Link>
+          <Link to={'/task/edit/' + this.props.task.id } className='e-list__item-edit'>Edit</Link>
         </div>
       )
     }

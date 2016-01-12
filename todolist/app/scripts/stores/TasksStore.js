@@ -8,6 +8,7 @@ var $ = require('jquery');
 var q = require('q');
 
 var baseUrl = 'http://10.27.11.73:3000/task';
+// var baseUrl = 'http://localhost:3000/task';
 
 var _todoList = [
   {
