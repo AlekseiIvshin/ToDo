@@ -5,6 +5,10 @@ var Loading = require('Loading.react.js');
 
 var TasksStore = require('stores/TasksStore.js');
 
+function alertDismissed() {
+  window.location.hash = '/';
+}
+
 var TaskForm = React.createClass({
   getInitialState: function() {
     return {
@@ -81,7 +85,12 @@ var TaskForm = React.createClass({
   },
 
   _onChangeTask: function() {
-    window.location.hash = '/';
+    navigator.notification.alert(
+      'Task successfully saved!',
+      alertDismissed,
+      'Task changes',
+      'OK'
+    );
   }
 });
 
