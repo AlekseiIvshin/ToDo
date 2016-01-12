@@ -65,38 +65,46 @@ function updateTask(taskUpdates) {
   return deferred.promise;
 }
 
+function getTasksList() {
+  var deferred = q.defer();
+  $.ajax({
+    url: baseUrl,
+    dataType: 'json'})
+  .then(
+    function(data){
+      deferred.resolve(data)
+    },
+    function(err) {
+      deferred.reject(err)
+    });
+
+  return deferred.promise;
+}
+
+function filterTasksList(filterByName) {
+  var deferred = q.defer();
+  $.ajax({
+    url: baseUrl + '/filter?&name=' + filterByName,
+    dataType: 'json'})
+  .then(
+    function(data){
+      deferred.resolve(data)
+    },
+    function(err) {
+      deferred.reject(err)
+    });
+
+  return deferred.promise;
+}
+
 var TasksStore = merge.recursive(true, EventEmitter.prototype, {
 
-  getTasksList: function() {
-    var deferred = q.defer();
-    $.ajax({
-      url: baseUrl,
-      dataType: 'json'})
-    .then(
-      function(data){
-        deferred.resolve(data)
-      },
-      function(err) {
-        deferred.reject(err)
-      });
-
-    return deferred.promise;
-  },
-
-  filter: function(filterByName) {
-    var deferred = q.defer();
-    $.ajax({
-      url: baseUrl + '/filter?&name=' + filterByName,
-      dataType: 'json'})
-    .then(
-      function(data){
-        deferred.resolve(data)
-      },
-      function(err) {
-        deferred.reject(err)
-      });
-
-    return deferred.promise;
+  getTasksList: function(filterByName) {
+    if(filterByName){
+      return filterTasksList(filterByName);
+    } else {
+      return getTasksList();
+    }
   },
 
   getTaskById: function(taskId) {

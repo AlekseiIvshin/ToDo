@@ -26,7 +26,6 @@ var TasksList = React.createClass({
     TasksStore.removeChangeListListener(this._refreshList);
   },
 
-
   render: function() {
 
     var tasks = [];
@@ -65,26 +64,13 @@ var TasksList = React.createClass({
 
   _refreshList: function() {
     var filterByName = document.querySelector('#filterField').value;
-    if (filterByName && filterByName.length > 0) {
+    TasksStore.getTasksList(filterByName).then((function (data) {
       this.setState({
-        loaded: false
+        filterValue: filterByName,
+        taskList: data.taskList,
+        loaded: true
       });
-      TasksStore.filter(filterByName).then((function (data) {
-        this.setState({
-          filterValue: data.filterValue,
-          taskList: data.taskList,
-          loaded: true
-        });
-      }).bind(this));
-    } else {
-      TasksStore.getTasksList().then((function (data) {
-        this.setState({
-          filterValue: '',
-          taskList: data.taskList,
-          loaded: true
-        });
-      }).bind(this));
-    }
+    }).bind(this));
   }
 });
 

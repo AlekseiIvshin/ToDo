@@ -28,15 +28,6 @@ var TasksActions = {
         newTask: newTask
       }
     })
-  },
-
-  filterTaskList: function(filterName) {
-    Dispatcher.handleAction({
-      actionType: TasksConstants.FILTER_TASKS_LIST,
-      data: {
-        name: filterName
-      }
-    })
   }
 }
 
