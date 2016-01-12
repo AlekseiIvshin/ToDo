@@ -1,0 +1,30 @@
+@import 'dimens';
+
+.e-list {
+  padding: 0;
+  margin: 0;
+  list-style-type: none;
+
+  &__item {
+    padding: $default-spacing;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__item-selector {
+    margin-right: $default-spacing;
+    min-width: 15px;
+    margin-left: 0;
+  }
+  &__item-name {
+    &--done {
+      text-decoration: line-through;
+    }
+  }
+  &__item-edit {
+    &--unactive {
+      color: gray;
+    }
+  }
+}

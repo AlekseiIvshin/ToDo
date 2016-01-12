@@ -41,12 +41,20 @@ var TasksList = React.createClass({
     }
 
     return (
-      <div>
-        <Link to='/task/new' className='e-new-task'>
-          <span className='e-font-icon'>&#xf2c7;</span>Add task
-        </Link>
-        <input type="search" placeholder="Search" onChange={debounce(this._refreshList, 1000)} className="e-filter" id="filterField" defaultValue={this.state.filterValue} />
-        {taskListView}
+      <div className='e-task-list'>
+        <div className='e-task-list__header e-header'>
+          <div className="e-header__item">
+            <Link to='/task/new' className='e-new-task'>
+              <span className='e-font-icon'>&#xf2c7;</span>Add task
+            </Link>
+          </div>
+          <div className="e-header__item">
+            <input type="search" placeholder="Search" onChange={debounce(this._refreshList, 1000)} id="filterField" className='e-filter' defaultValue={this.state.filterValue} />
+          </div>
+        </div>
+        <div className='e-task-list__list'>
+          {taskListView}
+        </div>
       </div>
     )
   },
