@@ -28,15 +28,23 @@ function todos(todos, action){
   switch (action.type) {
     case TodoActions.ADD_TODO:
       return todos.concat({
-           text: action.text,
-           completed: false
+          id: action.id,
+          text: action.text,
+          completed: false
          });
      case TodoActions.COMPLETE_TODO:
-       return todos.slice(0, action.index).concat(
-           Object.assign({}, todos[action.index], {
+       return todos.slice(0, action.id).concat(
+           Object.assign({}, todos[action.id], {
              completed: true
            }),
-           todos.slice(action.index + 1)
+           todos.slice(action.id + 1)
+         );
+     case TodoActions.REOPEN_TODO:
+       return todos.slice(0, action.id).concat(
+           Object.assign({}, todos[action.id], {
+             completed: false
+           }),
+           todos.slice(action.id + 1)
          );
     default:
       return todos;

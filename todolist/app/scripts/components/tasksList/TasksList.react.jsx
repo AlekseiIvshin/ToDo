@@ -34,16 +34,14 @@ var TasksList = React.createClass({
 
     var tasks = [];
     for (var key in visibleTodos) {
-      tasks.push(<TaskItem key={key} task={visibleTodos[key]}/>);
+      tasks.push(<TaskItem key={key} task={visibleTodos[key]} dispatch={dispatch}/>);
     }
 
     return (
       <div className='e-task-list'>
         <div className='e-task-list__header e-header'>
           <div className="e-header__item">
-            <AddTodo onAddClick={function(text) {
-                dispatch(TodoActions.addTodo(text));
-              }}/>
+            <AddTodo onAddClick={this.handleAddTodo}/>
           </div>
         </div>
         <div className='e-task-list__list'>
@@ -53,6 +51,13 @@ var TasksList = React.createClass({
     )
   },
 
+  handleAddTodo: function(text) {
+    var trimmedText = text.trim();
+    if (trimmedText) {
+      this.props.dispatch(TodoActions.addTodo(trimmedText));
+    }
+  },
+
   _onCreateTaskClick: function() {
     this.context.transitionTo('/task/new');
   }
@@ -60,12 +65,13 @@ var TasksList = React.createClass({
 
 function selectTodos(todos, filter) {
   switch (filter) {
-    case VisibilityFilters.SHOW_ALL:
-      return todos;
     case VisibilityFilters.SHOW_COMPLETED:
       return todos.filter(function (todo) { return todo.completed});
     case VisibilityFilters.SHOW_ACTIVE:
       return todos.filter(function (todo) { return !todo.completed});
+    case VisibilityFilters.SHOW_ALL:
+    default:
+      return todos;
   }
 }
 
