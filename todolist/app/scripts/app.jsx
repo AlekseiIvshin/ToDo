@@ -5,12 +5,23 @@ var Route = require('react-router').Route;
 var Link = require('react-router').Link;
 
 var TasksList = require('TasksList.react.jsx');
-var TaskForm = require('TaskForm.react.jsx');
 
-ReactDOM.render((
-  <Router>
-    <Route path="/" component={TasksList} />
-    <Route path="/task/edit/:taskId" component={TaskForm} mode='edit' />
-    <Route path="/task/new" component={TaskForm}  mode='new' />
-  </Router>
-), document.querySelector('#mount-point'));
+var TodoActions = require('actions/TodoActions.js');
+var createStore = require('redux').createStore;
+var Provider = require('react-redux').Provider;
+var todoApp = require('reducers/TodoListReducer.js');
+
+var store = createStore(todoApp);
+
+ReactDOM.render(
+  <Provider store={store}>
+    <TasksList />
+  </Provider>,
+  document.querySelector('#mount-point'));
+
+
+  // <Provider store={store}>
+  //   <Router>
+  //     <Route path="/" component={TasksList}/>
+  //   </Router>
+  // </Provider>

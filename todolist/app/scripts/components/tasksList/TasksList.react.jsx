@@ -1,58 +1,53 @@
 var React = require('react');
+var PropTypes = React.PropTypes;
 var List = require('List.react.jsx');
 var TaskItem = require('TaskItem.react.jsx');
 var Loading = require('Loading.react.js');
+var AddTodo = require('AddTodo.jsx');
 var Link = require('react-router').Link;
 
 var debounce = require('lodash').debounce;
 
-var TasksStore = require('stores/TasksStore.js');
+var connect = require('react-redux').connect;
+var TodoActions = require('actions/TodoActions.js');
+var VisibilityFilters = TodoActions.VISIBILITY_FILTERS;
 
 var TasksList = React.createClass({
 
-  getInitialState: function() {
-    return {
-      taskList: [],
-      loaded: false
-    }
-  },
+  propTypes: {
+    visibleTodos: PropTypes.arrayOf(PropTypes.shape({
+      text: PropTypes.string.isRequired,
+      completed: PropTypes.bool.isRequired
+    }).isRequired).isRequired,
 
-  componentDidMount: function() {
-    TasksStore.addChangeListListener(this._refreshList);
-    this._refreshList();
-  },
-
-  componentWillUnmount: function() {
-    TasksStore.removeChangeListListener(this._refreshList);
+    visibilityFilter: PropTypes.oneOf([
+      'SHOW_ALL',
+      'SHOW_COMPLETED',
+      'SHOW_ACTIVE'
+    ]).isRequired
   },
 
   render: function() {
+    var dispatch = this.props.dispatch;
+    var visibleTodos = this.props.visibleTodos;
+    var visibilityFilter = this.props.visibilityFilter;
 
     var tasks = [];
-    for (var key in this.state.taskList) {
-      tasks.push(<TaskItem key={key} task={this.state.taskList[key]}/>);
-    }
-    var taskListView;
-    if (this.state.loaded) {
-      taskListView = <List items={tasks} />
-    } else {
-      taskListView = <Loading />
+    for (var key in visibleTodos) {
+      tasks.push(<TaskItem key={key} task={visibleTodos[key]}/>);
     }
 
     return (
       <div className='e-task-list'>
         <div className='e-task-list__header e-header'>
           <div className="e-header__item">
-            <Link to='/task/new' className='e-new-task'>
-              <span className='e-font-icon'>&#xf2c7;</span>Add task
-            </Link>
-          </div>
-          <div className="e-header__item">
-            <input type="search" placeholder="Search" onChange={debounce(this._refreshList, 1000)} id="filterField" className='e-filter' defaultValue={this.state.filterValue} />
+            <AddTodo onAddClick={function(text) {
+                dispatch(TodoActions.addTodo(text));
+              }}/>
           </div>
         </div>
         <div className='e-task-list__list'>
-          {taskListView}
+          <List items={tasks} />
         </div>
       </div>
     )
@@ -60,18 +55,25 @@ var TasksList = React.createClass({
 
   _onCreateTaskClick: function() {
     this.context.transitionTo('/task/new');
-  },
-
-  _refreshList: function() {
-    var filterByName = document.querySelector('#filterField').value;
-    TasksStore.getTasksList(filterByName).then((function (data) {
-      this.setState({
-        filterValue: filterByName,
-        taskList: data.taskList,
-        loaded: true
-      });
-    }).bind(this));
   }
 });
 
-module.exports = TasksList;
+function selectTodos(todos, filter) {
+  switch (filter) {
+    case VisibilityFilters.SHOW_ALL:
+      return todos;
+    case VisibilityFilters.SHOW_COMPLETED:
+      return todos.filter(function (todo) { return todo.completed});
+    case VisibilityFilters.SHOW_ACTIVE:
+      return todos.filter(function (todo) { return !todo.completed});
+  }
+}
+
+function select(state) {
+  return {
+    visibleTodos: selectTodos(state.todos, state.visibilityFilter),
+    visibilityFilter: state.visibilityFilter
+  }
+}
+
+module.exports = connect(select)(TasksList);
