@@ -1,12 +1,5 @@
 var TasksService = require('./../data/TasksService.js');
 
-function changeStatus(todoId, newStatus) {
-  var taskItem = _.find(_tasksList, function(item) {
-    return item.id == todoId;
-  });
-  todoItem.status = newStatus;
-}
-
 function updateTask(req, res) {
   var taskUpdates = req.body;
   console.log('Update task');

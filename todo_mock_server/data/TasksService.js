@@ -4,17 +4,17 @@ var _tasksList = [
   {
     id: 0,
     text: 'Make todo list on flux + react',
-    status: null
+    completed: null
   },
   {
     id: 1,
     text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed et tortor non lectus lacinia gravida sit amet non enim. Donec fringilla lacus in tortor consectetur eleifend. In ultricies, tortor ac.',
-    status: null
+    completed: null
   },
   {
     id: 2,
     text: 'Task 3',
-    status: null
+    completed: null
   }
 ];
 
@@ -24,13 +24,6 @@ function generateId() {
 
 
 var TasksService = function() {};
-
-TasksService.changeStatus = function(todoId, newStatus) {
-  var todoItem = _.find(_tasksList, function(item) {
-    return item.id == todoId;
-  });
-  todoItem.status = newStatus;
-}
 
 TasksService.updateTask = function (taskUpdates) {
   var task = TasksService.getTaskById(taskUpdates.id);
@@ -43,8 +36,8 @@ TasksService.updateTask = function (taskUpdates) {
   if(taskUpdates.hasOwnProperty('text')) {
     task.text = taskUpdates.text;
   }
-  if(taskUpdates.hasOwnProperty('status')) {
-    task.status = taskUpdates.status;
+  if(taskUpdates.hasOwnProperty('completed')) {
+    task.completed = taskUpdates.completed;
   }
   return {
     success: true,

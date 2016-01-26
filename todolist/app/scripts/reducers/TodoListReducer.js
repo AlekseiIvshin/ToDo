@@ -1,5 +1,4 @@
 var TodoActions = require('actions/TodoActions.js');
-var objectAssign = require('object-assign')
 var combineReducers = require('redux').combineReducers;
 
 var initialState = {
@@ -21,34 +20,34 @@ function visibilityFilter(filter, action) {
   }
 }
 
-function todosUpdates(todos, action){
-  if (typeof todos === 'undefined') {
-    todos = initialState.todos;
+function todosUpdates(state, action){
+  if (typeof state === 'undefined') {
+    state = initialState.todos;
   }
 
   switch (action.type) {
     case TodoActions.ADD_TODO:
-      return todos.concat({
-          id: action.id,
-          text: action.text,
-          completed: false
-         });
-     case TodoActions.COMPLETE_TODO:
-       return todos.slice(0, action.id).concat(
-           Object.assign({}, todos[action.id], {
-             completed: true
-           }),
-           todos.slice(action.id + 1)
-         );
-     case TodoActions.REOPEN_TODO:
-       return todos.slice(0, action.id).concat(
-           Object.assign({}, todos[action.id], {
-             completed: false
-           }),
-           todos.slice(action.id + 1)
-         );
+      return Object.assign({}, state, {
+        isAdding: true
+      });
+    case TodoActions.ADD_TODO_RESULT:
+      return Object.assign({}, state, {
+        isAdding: false,
+        ADDING_RESULT: action.response
+      });
+    case TodoActions.COMPLETE_TODO:
+      return Object.assign({}, state, {
+        isCompliting: true
+      });
+    case TodoActions.COMPLETE_TODO_RESULT:
+      return Object.assign({}, state, {
+        isCompliting: false,
+        COMPLETING_RESULT: action.response
+      });
+    case TodoActions.REOPEN_TODO:
+
     default:
-      return todos;
+      return state;
   }
 }
 

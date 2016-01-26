@@ -13,6 +13,7 @@ var TodoActions = require('actions/TodoActions.js');
 var rootReducer = require('reducers/TodoListReducer.js');
 
 var TasksList = require('TasksList.react.jsx');
+var TaskEdit = require('TaskEdit.jsx');
 
 
 var createStoreWithMiddleware = applyMiddleware(
@@ -23,7 +24,10 @@ var store = createStoreWithMiddleware(rootReducer);
 
 ReactDOM.render(
   <Provider store={store}>
-    <TasksList />
+      <Router>
+        <Route path="/" component={TasksList} />
+        <Route path="/edit/:id" component={TaskEdit} />
+      </Router>
   </Provider>,
   document.querySelector('#mount-point'));
 

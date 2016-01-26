@@ -28,7 +28,7 @@ var TaskItem = React.createClass({
         <div className='e-list__item' onClick={this.onCompleteClick}>
           <input className='e-list__item-selector' type='checkbox' id={this.props.task.id} onChange={this.changeStatus} />
           <span className='e-list__item-name'>{this.props.task.text}</span>
-          <Link to={'/task/edit/' + this.props.task.id } className='e-list__item-edit'>Edit</Link>
+          <Link to={'/edit/' + this.props.task.id } className='e-list__item-edit'>Edit</Link>
         </div>
       )
     }
