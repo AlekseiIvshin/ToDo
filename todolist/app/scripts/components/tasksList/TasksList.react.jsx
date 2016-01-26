@@ -27,6 +27,10 @@ var TasksList = React.createClass({
     ]).isRequired
   },
 
+  componentDidMount: function() {
+    this.props.dispatch(TodoActions.fetchTodos());
+  },
+
   render: function() {
     var dispatch = this.props.dispatch;
     var visibleTodos = this.props.visibleTodos;
@@ -63,21 +67,9 @@ var TasksList = React.createClass({
   }
 });
 
-function selectTodos(todos, filter) {
-  switch (filter) {
-    case VisibilityFilters.SHOW_COMPLETED:
-      return todos.filter(function (todo) { return todo.completed});
-    case VisibilityFilters.SHOW_ACTIVE:
-      return todos.filter(function (todo) { return !todo.completed});
-    case VisibilityFilters.SHOW_ALL:
-    default:
-      return todos;
-  }
-}
-
 function select(state) {
   return {
-    visibleTodos: selectTodos(state.todos, state.visibilityFilter),
+    visibleTodos: state.todosFetching.todos,
     visibilityFilter: state.visibilityFilter
   }
 }

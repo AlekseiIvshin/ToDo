@@ -34,7 +34,7 @@ function getTaskById(req, res) {
 function getTasksList(req, res) {
   console.log('Get tasks list');
   res.send({
-    taskList: TasksService.getTasksList()
+    todos: TasksService.getTasksList()
   });
 }
 
@@ -43,7 +43,7 @@ function getFilteredTaskList(req, res) {
   console.log('Filter task list filter: name LIKE ' + filterByName);
   res.send({
     filterValue: filterByName,
-    taskList: TasksService.getFilteredTaskList(filterByName)
+    todos: TasksService.getFilteredTaskList(filterByName)
   });
 }
 

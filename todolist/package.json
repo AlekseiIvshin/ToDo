@@ -23,6 +23,7 @@
   "dependencies": {
     "events": "^1.1.0",
     "flux": "^2.1.1",
+    "isomorphic-fetch": "^2.2.1",
     "jquery": "^2.2.0",
     "keymirror": "^0.1.1",
     "lodash": "^3.10.1",
@@ -33,6 +34,7 @@
     "react-dom": "^0.14.3",
     "react-redux": "^4.0.6",
     "react-router": "^1.0.3",
-    "redux": "^3.0.6"
+    "redux": "^3.0.6",
+    "redux-thunk": "^1.0.3"
   }
 }

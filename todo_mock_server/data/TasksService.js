@@ -3,17 +3,17 @@ var _ = require('lodash');
 var _tasksList = [
   {
     id: 0,
-    name: 'Make todo list on flux + react',
+    text: 'Make todo list on flux + react',
     status: null
   },
   {
     id: 1,
-    name: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed et tortor non lectus lacinia gravida sit amet non enim. Donec fringilla lacus in tortor consectetur eleifend. In ultricies, tortor ac.',
+    text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed et tortor non lectus lacinia gravida sit amet non enim. Donec fringilla lacus in tortor consectetur eleifend. In ultricies, tortor ac.',
     status: null
   },
   {
     id: 2,
-    name: 'Task 3',
+    text: 'Task 3',
     status: null
   }
 ];
@@ -40,8 +40,8 @@ TasksService.updateTask = function (taskUpdates) {
       message: 'Task was not found (id = ' + taskUpdates.id + ')'
     }
   }
-  if(taskUpdates.hasOwnProperty('name')) {
-    task.name = taskUpdates.name;
+  if(taskUpdates.hasOwnProperty('text')) {
+    task.text = taskUpdates.text;
   }
   if(taskUpdates.hasOwnProperty('status')) {
     task.status = taskUpdates.status;
@@ -56,7 +56,7 @@ TasksService.addTask = function (newTask) {
   var taskId = generateId();
   _tasksList.push({
     id: taskId,
-    name: newTask.name
+    text: newTask.text
   });
 }
 
@@ -70,10 +70,10 @@ TasksService.getTasksList = function () {
   return _tasksList;
 }
 
-TasksService.getFilteredTaskList = function(filterByName) {
-  var preparedFilterName = filterByName.toLowerCase();
+TasksService.getFilteredTaskList = function(filterByText) {
+  var preparedFilterText = filterByText.toLowerCase();
   return _.filter(_tasksList, function(item) {
-    return item.name.toLowerCase().search(preparedFilterName) != -1;
+    return item.text.toLowerCase().search(preparedFilterText) != -1;
   });
 }
 

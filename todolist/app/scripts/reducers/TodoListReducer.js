@@ -4,7 +4,8 @@ var combineReducers = require('redux').combineReducers;
 
 var initialState = {
   visibilityFilter: 'SHOW_ALL',
-  todos: []
+  todos: [],
+  isFetching: false
 }
 
 function visibilityFilter(filter, action) {
@@ -20,7 +21,7 @@ function visibilityFilter(filter, action) {
   }
 }
 
-function todos(todos, action){
+function todosUpdates(todos, action){
   if (typeof todos === 'undefined') {
     todos = initialState.todos;
   }
@@ -51,9 +52,31 @@ function todos(todos, action){
   }
 }
 
+  function todosFetching(state, action){
+    if (typeof state === 'undefined') {
+      state = initialState;
+    }
+
+    switch (action.type) {
+      case TodoActions.FETCH_TODOS_REQUEST:
+        return Object.assign({}, state, {
+          isFetching: true
+        });
+       case TodoActions.FETCH_TODOS_RECEIVE:
+         return Object.assign({}, state, {
+           isFetching: false,
+           todos: action.todos,
+           lastUpdated: action.receivedAt
+         });
+      default:
+        return state;
+    }
+}
+
 var tasksApp = combineReducers({
   visibilityFilter,
-  todos
+  todosUpdates,
+  todosFetching
 });
 
 module.exports = tasksApp;
